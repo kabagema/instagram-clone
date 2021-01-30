@@ -11,7 +11,7 @@ function App() {
           alt=""
         />
       </div>
-      <Post />
+      <Post username="irisofvictor" caption="2021 is my year" imageUrl="https://upload.wikimedia.org/wikipedia/en/8/89/Megamind2010Poster.jpg" />
 
       {/* Header */}
       {/* Posts */}
