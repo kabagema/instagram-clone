@@ -12,17 +12,18 @@ function Post({username, caption, imageUrl }) {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Aka_Manto.png/146px-Aka_Manto.png"
           // alt={username}
         />
-        <h3>Username</h3>
+        <h3>{username}</h3>
       </div>
 
       <img
         className="post__image"
-        src="https://cdn-media-1.freecodecamp.org/images/1*y6C4nSvy2Woe0m7bWEn4BA.png"
+        src={imageUrl}
         alt=""
       />
-      <h4 className="post__text">
-        <strong>IrisofVictor:</strong>
-        First post here
+      <h4 
+        className="post__text">
+        <strong>{username} </strong>
+        {caption}
       </h4>
       {/* header - Avatar _ name 
                 image
