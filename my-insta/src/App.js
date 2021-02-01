@@ -1,13 +1,9 @@
 import "./App.css";
 import Post from "./Post";
-import React, { useEffect, useState, useStyles } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "./firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
 
 function getModalStyle() {
   const top = 50;
@@ -41,7 +37,7 @@ function App() {
   useEffect(() => {
     db.collection("posts").onSnapshot((snapshot) => {
       setPosts(
-        snapshot.docs.map((doc) => ({
+        snapshot.docs.map(doc => ({
           id: doc.id,
           post: doc.data(),
         }))
@@ -64,23 +60,19 @@ function App() {
           alt=""
         />
       </div>
-      {posts.map(({ id, posts }) => (
+      {posts.map(({ id, post}) => (
         <Post
           key={id}
-          username={posts.username}
-          caption={posts.caption}
-          imageUrl={posts.imageUrl}
+          username={post.username}
+          caption={post.caption}
+          imageUrl={post.imageUrl}
         />
       ))}
 
-      <Post
-        username="irisofvictor"
-        caption="hard coded"
-        imageUrl="https://upload.wikimedia.org/wikipedia/en/8/89/Megamind2010Poster.jpg"
-      />
     </div>
   );
 }
 
 export default App;
 
+//https://youtu.be/f7T48W0cwXM?t=5584 
