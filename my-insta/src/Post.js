@@ -28,7 +28,10 @@ function Post({username, caption, imageUrl }) {
       {/* header - Avatar _ name 
                 image
                 icons 
-                user name caption   */}
+                user name caption 
+                https://youtu.be/f7T48W0cwXM
+                
+        */}
     </div>
   );
 }

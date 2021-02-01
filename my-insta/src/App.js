@@ -1,31 +1,21 @@
 import "./App.css";
 import Post from "./Post";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "./firebase";
 
 function App() {
+  const [posts, setPosts] = useState([]);
 
-  const [posts, setPosts] = useState([
-    {
-      username:"TightenVille",
-      caption:"testing 123", 
-      imageUrl:"https://upload.wikimedia.org/wikipedia/en/8/89/Megamind2010Poster.jpg"
-    },
-    {
-      username:"Rameses",
-      caption:"My childhood",
-      imageUrl:"https://upload.wikimedia.org/wikipedia/en/6/6c/Prince_of_egypt_ver2.jpg"
-    },
-    {
-      username:"dine@Po",
-      caption:"Great movie",
-      imageUrl:"https://upload.wikimedia.org/wikipedia/en/7/76/Kungfupanda.jpg"
-    },
-    {
-      username:"Hiccup", 
-      caption:"memory lane",
-      imageUrl:"https://www.themoviedb.org/t/p/original/q9JwFktEfzdXlE7gFjKSTOD3jpK.jpg" 
-    }
-  ]);
+  useEffect(() => {
+    db.collection("posts").onSnapshot((snapshot) => {
+      setPosts(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          post: doc.data()
+        }))
+      );
+    });
+  }, []);
 
   return (
     <div className="app">
@@ -36,17 +26,20 @@ function App() {
           alt=""
         />
       </div>
-      {
-        posts.map(posts => (
-          <Post username={posts.username}
+      {posts.map(({id, posts}) => (
+        <Post
+          key={id}
+          username={posts.username}
           caption={posts.caption}
           imageUrl={posts.imageUrl}
-          />
-        ))
-      }
+        />
+      ))}
 
-      <Post username="irisofvictor" caption="2021 is my year" imageUrl="https://upload.wikimedia.org/wikipedia/en/8/89/Megamind2010Poster.jpg" />
-
+      <Post
+        username="irisofvictor"
+        caption="hard coded"
+        imageUrl="https://upload.wikimedia.org/wikipedia/en/8/89/Megamind2010Poster.jpg"
+      />
     </div>
   );
 }
