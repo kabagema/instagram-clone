@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "./firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { Button, Input } from "@material-ui/core";
 
 function getModalStyle() {
   const top = 50;
@@ -33,11 +34,14 @@ function App() {
 
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     db.collection("posts").onSnapshot((snapshot) => {
       setPosts(
-        snapshot.docs.map(doc => ({
+        snapshot.docs.map((doc) => ({
           id: doc.id,
           post: doc.data(),
         }))
@@ -45,22 +49,54 @@ function App() {
     });
   }, []);
 
+  const signUp = (event) => {};
+
   return (
     <div className="app">
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <h2>I am a modal</h2>
+
+          <form>
+            <center>
+              <img
+                className="app__headerImage"
+                src="https:www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt=""
+              />
+              <Input
+                placeholder="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <Input
+                placeholder="email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                placeholder="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button onClick={signUp}>Sign Up</Button>
+            </center>
+          </form>
+          
         </div>
       </Modal>
 
       <div className="app__header">
         <img
-          className="app_headerImage"
+          className="app__headerImage"
           src="https:www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt=""
         />
       </div>
-      {posts.map(({ id, post}) => (
+      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      {posts.map(({ id, post }) => (
         <Post
           key={id}
           username={post.username}
@@ -68,11 +104,10 @@ function App() {
           imageUrl={post.imageUrl}
         />
       ))}
-
     </div>
   );
 }
 
 export default App;
 
-//https://youtu.be/f7T48W0cwXM?t=5584 
+//https://youtu.be/f7T48W0cwXM?t=5584
